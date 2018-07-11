@@ -10,18 +10,24 @@ A function that takes a character as an argument and checks it against the under
 
 
 var Letter = function(ltr){
-    this.ltr = ltr;
     this.isGuessed = false;
-    
-    this.ready = function(){
-        console.log("Letter ready");
+    //
+    this.setLetter = function(ltr){
+        if(ltr === ' ') this.isGuessed = true;
+        return ltr;
     }
+    this.ltr = this.setLetter(ltr);
+    //
     this.display = function(){
         if(this.isGuessed) return ltr;
         else return '_';
     }
     this.check = function(char){
-        if(char === ltr) this.isGuessed = true;
+        if(char === ltr) {
+            this.isGuessed = true;
+            return true;
+        }
+        return false;
     }
    
 }

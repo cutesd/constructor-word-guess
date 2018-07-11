@@ -11,16 +11,93 @@ var inquirer = require("inquirer");
 //
 var qCnt = 10;
 var word;
-var word_arr = ['alabama','mississippi','california','nevada']
-
+var word_arr = ['south dakota', 'alabama', 'mississippi', 'california', 'nevada'];
+var guesses;
 //
-var word = new Word();
-// word.ready();
-word.setWord("mississippi");
-console.log(word.display());
-word.check('i');
-console.log(word.display());
-word.check('m');
-console.log(word.display());
-word.check('s');
-console.log(word.display());
+startGame();
+
+function startGame() {
+    qCnt = 10;
+    guesses = [];
+    var rnd = Math.floor(Math.random() * word_arr.length);
+    // trace("word choice:", word_arr[rnd]);
+    word = new Word(word_arr[rnd]);
+    word_arr.splice(rnd, 1);
+    // trace(word_arr);
+    trace('');
+    //
+    trace(word.display());
+    trace('');
+    prompt();
+}
+
+// 
+function prompt() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Guess a letter!",
+                name: "letter"
+            }
+        ])
+        .then(response => {
+            // 
+            if (guesses.indexOf(response.letter) === -1) {
+                guesses.push(response.letter);
+                if (word.check(response.letter)) correct();
+                else incorrect();
+            } else {
+                trace("\nYou already guessed that letter.  Please guess again.\n");
+                prompt();
+            }
+        });
+}
+
+function correct() {
+    trace('\n' + word.display());
+    trace("\nCORRECT!!!\n");
+    if (word.done) {
+        trace("You got it right!! Next word!\n");
+        if (word_arr.length > 0)
+            startGame();
+        else
+            trace("Congratulations! You guessed all the words!!");
+    } else {
+        prompt();
+    }
+}
+
+function incorrect() {
+    trace('\n' + word.display());
+    trace("\nINCORRECT!!!\n");
+    trace(--qCnt, "guesses remaining!!!\n");
+    if (qCnt === 0) {
+        trace("You're out of guesses.\n");
+        playAgain();
+    } else {
+        prompt();
+    }
+}
+
+function playAgain() {
+    inquirer
+        .prompt([
+            {
+                type: "confirm",
+                message: "Would you like to play again?",
+                name: "confirm",
+                default: true
+            }
+        ])
+        .then(response => {
+            // 
+            if (response.confirm) {
+                startGame();
+            }
+        });
+}
+
+function trace(...args) {
+    console.log(args.join(' '));
+}

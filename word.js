@@ -10,22 +10,19 @@ A function that takes a character as an argument and calls the guess function on
 
 var Letter = require("./letter.js").Letter;
 
-console.log("word.js here");
-
-var Word = function () {
-    this.ltr_arr = [];
-
-    this.ready = function () {
-        console.log('Word is ready');
-    }
+var Word = function (word) {
+    this.done = false;
 
     this.setWord = function (word) {
+        var _arr = [];
         for (var i = 0; i < word.length; i++) {
-            this.ltr_arr.push(new Letter(word.charAt(i)));
+            _arr.push(new Letter(word.charAt(i)));
         }
-        console.log(this.ltr_arr);
+        // console.log(this.ltr_arr);
+        return _arr;
     }
-
+    this.ltr_arr = this.setWord(word);
+    //
     this.display = function () {
         var str = '';
         this.ltr_arr.forEach(ltr => {
@@ -35,9 +32,14 @@ var Word = function () {
     }
 
     this.check = function (char) {
-        this.ltr_arr.forEach(ltr =>{
-            ltr.check(char);
+        var found = false;
+        var done = true;
+        this.ltr_arr.forEach(ltr => {
+            if (ltr.check(char) && !found) found = true;
+            if (!ltr.isGuessed) done = false;
         });
+        this.done = done;
+        return found;
     }
 }
 
