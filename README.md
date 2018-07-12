@@ -1,7 +1,7 @@
-# Constructor Word Guess
+# Constructor Word Guess CLI
 
 ## Overview
-Terminal window hangman game utilizing constuctors.
+Command line interface hangman game utilizing NodeJS constuctors.
 
 ## Demonstrates
 * NodeJS
