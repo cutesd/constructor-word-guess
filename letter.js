@@ -32,4 +32,4 @@ var Letter = function(ltr){
    
 }
 
-exports.Letter = Letter;
+module.exports = Letter;

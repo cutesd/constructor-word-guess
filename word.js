@@ -8,7 +8,7 @@ A function that takes a character as an argument and calls the guess function on
 
 */
 
-var Letter = require("./letter.js").Letter;
+var Letter = require("./letter.js");
 
 var Word = function (word) {
     this.done = false;
@@ -28,7 +28,8 @@ var Word = function (word) {
         this.ltr_arr.forEach(ltr => {
             str += ltr.display() + " ";
         });
-        return str;
+        // return str;
+        console.log('\n' + str);
     }
 
     this.check = function (char) {
@@ -43,4 +44,4 @@ var Word = function (word) {
     }
 }
 
-exports.Word = Word;
+module.exports = Word;

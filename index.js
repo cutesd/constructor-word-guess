@@ -5,7 +5,7 @@ Randomly selects a word and uses the Word constructor to store it
 Prompts the user for each guess and keeps track of the user's remaining guesses
 */
 
-var Word = require("./word.js").Word;
+var Word = require("./word.js");
 var inquirer = require("inquirer");
 
 //
@@ -24,9 +24,8 @@ function startGame() {
     word = new Word(word_arr[rnd]);
     word_arr.splice(rnd, 1);
     // trace(word_arr);
-    trace('');
     //
-    trace(word.display());
+    word.display()
     trace('');
     prompt();
 }
@@ -55,21 +54,22 @@ function prompt() {
 }
 
 function correct() {
-    trace('\n' + word.display());
+    word.display();
     trace("\nCORRECT!!!\n");
     if (word.done) {
-        trace("You got it right!! Next word!\n");
-        if (word_arr.length > 0)
+        if (word_arr.length > 0) {
+            trace("You got it right!! Next word!\n");
             startGame();
-        else
+        } else {
             trace("Congratulations! You guessed all the words!!");
+        }
     } else {
         prompt();
     }
 }
 
 function incorrect() {
-    trace('\n' + word.display());
+    word.display();
     trace("\nINCORRECT!!!\n");
     trace(--qCnt, "guesses remaining!!!\n");
     if (qCnt === 0) {
